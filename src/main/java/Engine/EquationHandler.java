@@ -1,23 +1,34 @@
 package Engine;
 
+import GUI.Plotter;
+
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
+
 public class EquationHandler {
 
-    public static void main(String[] args) {
+    private Plotter plotter;
 
-        // Lit code
-        double Least = -(Math.PI);
-        double Target = 0;
-        double Most = Math.PI;
+    public EquationHandler(Plotter plotter) {
+        this.plotter = plotter;
+        uploadDataPoints();
+    }
 
-        double leastTem = Least; // To operate over value without changing the og
-        double increment = (Math.PI/10);
+    public void uploadDataPoints(){
 
-        while (leastTem <= Target) {
+        double negativePI = -(Math.PI);
+        double positivePI = Math.PI;
+        double increment = (Math.PI/40);
 
-            System.out.printf("%f %10f\n", leastTem, Math.sin(leastTem));
-            leastTem += increment;
+        List<Point2D.Double> dataPoints = new ArrayList<>();
 
+        while(negativePI <= positivePI){
+
+            dataPoints.add(new Point2D.Double(negativePI, Math.sin(negativePI)));
+            negativePI += increment;
         }
 
+        plotter.setPoints(dataPoints); // sends dataPoint to Plot
     }
 }
