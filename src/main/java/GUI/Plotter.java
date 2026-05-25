@@ -7,21 +7,19 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Plotter extends JFrame {
+public class Plotter extends JPanel {
 
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
+    private final int increment = 39;
 
     private final Color bgColor = new Color(255,255,240);
-
+    private final Color gridColor = new Color(140,145,155);
     List<Point2D.Double> points = new ArrayList<>();
 
     public Plotter() {
 
-        setTitle("Plotter");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(WIDTH, HEIGHT);
-        setLocationRelativeTo(null);
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
     public void setPoints(List<Point2D.Double> points) {
@@ -32,11 +30,11 @@ public class Plotter extends JFrame {
     //Grids on the canvas
 
     @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(bgColor);
-        g2d.fillRect(0, 0, WIDTH, HEIGHT);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
 
         g2d.translate(WIDTH / 2, HEIGHT / 2);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -48,12 +46,11 @@ public class Plotter extends JFrame {
     }
 
     private void drawGrid(Graphics2D g2d) {
-        g2d.setColor(Color.LIGHT_GRAY);
+        g2d.setColor(gridColor);
         g2d.setStroke(new BasicStroke(1.0f));
 
         int halfWidth = WIDTH / 2;
         int halfHeight = HEIGHT / 2;
-        int increment = 10;
 
         for (int x = increment; x < halfWidth; x += increment) {
 
@@ -85,8 +82,8 @@ public class Plotter extends JFrame {
 
         Point2D.Double previousPoint = null;
 
-        double xScale = 50;
-        double yScale = 50;
+        double xScale = increment;
+        double yScale = increment;
 
         for (Point2D.Double point : points) {
 

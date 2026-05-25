@@ -8,7 +8,7 @@ import java.util.List;
 
 public class EquationHandler {
 
-    private Plotter plotter;
+    private final Plotter plotter;
 
     public EquationHandler(Plotter plotter) {
         this.plotter = plotter;
@@ -17,8 +17,8 @@ public class EquationHandler {
 
     public void uploadDataPoints(){
 
-        double negativePI = -(Math.PI);
-        double positivePI = Math.PI;
+        double negativePI = -(Math.PI * 5);
+        double positivePI = Math.PI * 5;
         double increment = (Math.PI/40);
 
         List<Point2D.Double> dataPoints = new ArrayList<>();
