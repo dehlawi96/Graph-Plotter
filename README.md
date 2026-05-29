@@ -35,13 +35,14 @@ Written as a personal project to explore GUI development and math expression par
 3. Click `Plot Graphs` to render
 
 ## Project Structure
+
 src/
-|-- Main.java
-|-- GUI/
-|  |-- Frame.java
-|  |-- Plotter.java
-|--Engine/
-|  |--EquationHandler.java
+├── Main.java
+├── GUI/
+│   ├── Frame.java
+│   └── Plotter.java
+└── Engine/
+└── EquationHandler.java0
 
 ## Limitation
 
