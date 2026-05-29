@@ -1,18 +1,13 @@
-import Engine.EquationHandler;
 import GUI.Frame;
-import GUI.Plotter;
-
+import org.mariuszgromada.math.mxparser.License;
 import javax.swing.*;
 
 public class Main {
-
     public static void main(String[] args) {
+        License.iConfirmNonCommercialUse("my-app");
+
         SwingUtilities.invokeLater(() -> {
             Frame frame = new Frame();
-            Plotter plotter = new Plotter();
-            EquationHandler handler = new EquationHandler(plotter);
-            frame.add(plotter);
-            frame.pack();
             frame.setVisible(true);
         });
     }

@@ -1,34 +1,38 @@
 package Engine;
 
-import GUI.Plotter;
-
+import org.mariuszgromada.math.mxparser.Function;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EquationHandler {
 
-    private final Plotter plotter;
+    private static final double START_X = -(Math.PI * 5);
+    private static final double END_X = Math.PI * 5;
+    private static final double STEP = Math.PI / 200;
+    private static final int EXPECTED_POINTS = (int) ((END_X - START_X) / STEP) + 1;
 
-    public EquationHandler(Plotter plotter) {
-        this.plotter = plotter;
-        uploadDataPoints();
+    public static List<List<Point2D>> uploadDataPoints(String rawInput) {
+        return Arrays.stream(rawInput.split(","))
+                .parallel()
+                .map(String::trim)
+                .filter(e -> !e.isEmpty())
+                .map(EquationHandler::evaluateSingle)
+                .collect(Collectors.toList());
     }
 
-    public void uploadDataPoints(){
+    private static List<Point2D> evaluateSingle(String expressionBody) {
+        Function f = new Function("f(x) = " + expressionBody);
+        List<Point2D> points = new ArrayList<>(EXPECTED_POINTS);
 
-        double negativePI = -(Math.PI * 5);
-        double positivePI = Math.PI * 5;
-        double increment = (Math.PI/40);
-
-        List<Point2D.Double> dataPoints = new ArrayList<>();
-
-        while(negativePI <= positivePI){
-
-            dataPoints.add(new Point2D.Double(negativePI, Math.sin(negativePI)));
-            negativePI += increment;
+        for (double x = START_X; x <= END_X; x += STEP) {
+            double y = f.calculate(x);
+            if (Double.isFinite(y)) {
+                points.add(new Point2D.Double(x, y));
+            }
         }
-
-        plotter.setPoints(dataPoints); // sends dataPoint to Plot
+        return points;
     }
 }
